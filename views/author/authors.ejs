@@ -1,0 +1,40 @@
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head.ejs'); %>
+  </head>
+  <body class="container">
+    <header>
+      <%- include('../partials/header.ejs'); %>
+    </header>
+
+    <main>
+      <div class="jumbotron">
+        <h3>Search Authors</h3>
+        <form action="/authors" method="GET">
+          <label for="name">Author Name</label>
+          <input type="text" name="name">
+          <input type="submit" value="Find" />  
+        </form>  
+        <% authors.forEach(author => { %>  
+        <div><%= author.name %></div>
+        <a href="/author/<%= author.id %>">View</a>
+        <a href="/author/<%= author.id %>/edit">Edit</a>
+        <form method="POST" action="/author/<%= author.id %>?_method=DELETE">
+          <button type="submit">Delete</button>
+        </form>
+        <% }) %>
+
+      </div>
+
+
+
+    </main>
+
+    <footer>
+      <%- include('../partials/footer.ejs'); %>
+    </footer>
+  </body>
+</html>
