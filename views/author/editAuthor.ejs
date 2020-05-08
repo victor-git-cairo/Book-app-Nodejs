@@ -1,0 +1,35 @@
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- moved one level up to point partial -->
+    <%- include('../partials/head.ejs'); %>
+  </head>
+  <body class="container">
+    <header>
+      <%- include('../partials/header.ejs') %>
+    </header>
+
+    <main>
+      <div class="jumbotron">
+        <%- include('../partials/errorMessage.ejs') %>
+        <h3>Edit Authors</h3>
+
+        <!-- action - path  and post method to send data to server -->
+        <!-- path - url to which the request will be sent - url(relative web page) or <end point> that will process the request -->
+        <form action="/author/<%=author.id %>?_method=PUT" method="POST">
+          <label for="name">Name</label>
+          <input type="text" name="name" value=<%=author.name %> /><br />
+          <!-- body.name to get the value input in the form. You can use bodyparser -->
+          <a href="/author/<%=author.id%>">Cancel</a>
+          <input type="submit" value="Create" />          
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      <%- include('../partials/footer.ejs'); %>
+    </footer>
+  </body>
+</html>

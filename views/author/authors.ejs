@@ -22,17 +22,15 @@
         <div><%= author.name %></div>
         <a href="/author/<%= author.id %>">View</a>
         <a href="/author/<%= author.id %>/edit">Edit</a>
-        <form method="POST" action="/author/<%= author.id %>?_method=DELETE">
-          <button type="submit">Delete</button>
-        </form>
+
+        <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals -->
+
+        <%- include('../partials/deletebutton', { url: `/author/${author.id}` }) %>
+
+  
         <% }) %>
-
       </div>
-
-
-
     </main>
-
     <footer>
       <%- include('../partials/footer.ejs'); %>
     </footer>
