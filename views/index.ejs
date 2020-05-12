@@ -15,11 +15,13 @@
         <h2>Recently Added</h2>
         <p>Welcome to templating using EJS</p>
       </div>
- 
-      <% books.forEach(book => { %>
-        <img src="<%=book.coverImagePath %>" height="200" width="100" alt="bookImage">
+   
+      <% if (books.length > 0) { %>
+        <% books.forEach(book => { %>
+          <img src="<%=book.coverImagePath %>" height="200" width="100" alt="bookImage">
         <% }) %>
-      
+      <% } %>
+
     </main>
     <footer>
       <%- include('partials/footer.ejs'); %>

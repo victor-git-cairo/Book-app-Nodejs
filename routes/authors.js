@@ -7,6 +7,12 @@ const express = require("express");
 const Author = require("../models/author");
 const router = express.Router();
 
+// endpoint - new author
+router.get("/new", (req, res) => {
+  //res.render('index')
+  res.render("../views/author/newAuthors", { author: new Author() });
+});
+
 // endpoint - all authors
 router.get("/", async (req, res) => {
   //res.render('index')
@@ -22,12 +28,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// endpoint - new author
-router.get("/new", (req, res) => {
-  //res.render('index')
-  res.render("../views/author/newAuthors", { author: new Author() });
-});
-
+// endpoint handler by author id
 router.get("/:id", (req, res) => {
   res.send("Show1 Author" + req.params.id);
 });
@@ -37,7 +38,7 @@ router.post("/addauthor", async (req, res) => {
   // body parser is used to get data from the referred page - req.body.name/ object in form
   try {
     const author = new Author({
-      name: req.body.name,
+      name: req.body.name,  // bodyparser
     });
     let newAuthor = await author.save(); //when fail its goes to catch
     console.log(newAuthor); //when success it print.
@@ -67,11 +68,14 @@ router.get("/:id/edit", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   let author
+ 
   try {
     author = await Author.findById(req.params.id);
+    author.name = req.body.name
     await author.save();
     res.redirect(`/author/${author.id}`)
   } catch (err) {
+    console.log(err.message)
     if (author === null) {
       res.redirect("/");
     } else {
@@ -86,10 +90,23 @@ router.put("/:id", async (req, res) => {
 
 // method overrride - https://stackoverflow.com/questions/27058516/create-a-href-link-that-uses-http-delete-verb-in-express-js
 // right attitude and determination - Kingsley Ijomah
-//https://github.com/expressjs/method-override
+// https://github.com/expressjs/method-override
 // https://stackabuse.com/building-a-rest-api-with-node-and-express/  with AjaX
-router.delete("/:id", (req, res) => {
-  res.send("Delete Authors" + req.params.id);
+router.delete("/:id", async(req, res) => {
+  try {
+    author = await Author.findById(req.params.id);
+    await author.remove();
+    res.redirect("/")
+  } catch (err) {
+    console.log(err.message)
+    if (author === null) {
+      res.redirect("/");
+    } else {
+      console.error(err);
+      res.redirect(`/author/${author.id}`)
+     
+    }
+  }
 });
 
 module.exports = router;

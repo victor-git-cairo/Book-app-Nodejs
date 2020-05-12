@@ -12,23 +12,25 @@
 
     <main>
       <div class="jumbotron">
-        <h3>Search Authors</h3>
-        <form action="/authors" method="GET">
-          <label for="name">Author Name</label>
-          <input type="text" name="name">
-          <input type="submit" value=" Find " />  
-        </form>  
-        <% authors.forEach(author => { %>  
-        <div><%= author.name %></div>
-        <a href="/author/<%= author.id %>">View</a>
+        <h2><%=author.name%></h2>
+
         <a href="/author/<%= author.id %>/edit">Edit</a>
 
         <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals -->
+        <%- include('../partials/deletebutton', { url: `/author/${author.id}` })
+        %>
 
-        <%- include('../partials/deletebutton', { url: `/author/${author.id}` }) %>
-
-  
+        <div>
+   
+          
+      <% if (booksByAuthor.length > 0) { %>
+        <h2>Book By Author</h2>
+        <% booksByAuthor.forEach(book => { %>
+          <img src="<%=book.coverImagePath %>" height="200" width="100" alt="bookImage">
         <% }) %>
+      <% } %>
+        </div>
+
       </div>
     </main>
     <footer>
