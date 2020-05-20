@@ -1,10 +1,14 @@
 // Router files - defined endpoint and the app route
 //https://ncoughlin.com/express-js-ejs-render-page-dynamic-content/  - dynamic ejs template
 //https://github.com/scotch-io/node-api-course
+// req.params.variable from handler
+// req.body.fieldname from form
+// req.query.variable from url with get
 
 // author router setup
 const express = require("express");
 const Author = require("../models/author");
+const Book = require("../models/book");
 const router = express.Router();
 
 // endpoint - new author
@@ -23,31 +27,47 @@ router.get("/", async (req, res) => {
     res.render("../views/author/authors", {
       authors: authors,
     });
+
   } catch {
     res.direct("/");
   }
 });
 
 // endpoint handler by author id
-router.get("/:id", (req, res) => {
-  res.send("Show1 Author" + req.params.id);
+router.get("/:id", async (req, res) => {
+  try {
+    const author = await Author.findById(req.params.id)
+    const book = await Book.find({author: author.id}).limit(3).exec()
+
+    res.render("../views/author/showAuthors", {
+      author:author,
+      booksByAuthor:book
+    })
+
+  } catch(err) {
+    console.log(err)
+    res.redirect("/")
+  }
 });
 
-// endpoint addauthors
+// endpoint handler -  create a new author
 router.post("/addauthor", async (req, res) => {
   // body parser is used to get data from the referred page - req.body.name/ object in form
   try {
     const author = new Author({
       name: req.body.name,  // bodyparser
     });
+
     let newAuthor = await author.save(); //when fail its goes to catch
     console.log(newAuthor); //when success it print.
     res.redirect("/author/");
+
   } catch (err) {
     console.error(err);
     res.render("../views/author/newAuthors", {
       errorMessage: "Error creating author",
     });
+
     res.status(500);
   }
 
@@ -56,6 +76,7 @@ router.post("/addauthor", async (req, res) => {
 });
 
 // install npm i method-override to test put and delete
+//endpoint handler - edit specific author
 router.get("/:id/edit", async (req, res) => {
   try {
     const author = await Author.findById(req.params.id);
@@ -66,6 +87,8 @@ router.get("/:id/edit", async (req, res) => {
   }
 });
 
+
+// endpoint handler 
 router.put("/:id", async (req, res) => {
   let author
  
@@ -74,6 +97,7 @@ router.put("/:id", async (req, res) => {
     author.name = req.body.name
     await author.save();
     res.redirect(`/author/${author.id}`)
+
   } catch (err) {
     console.log(err.message)
     if (author === null) {
@@ -92,6 +116,8 @@ router.put("/:id", async (req, res) => {
 // right attitude and determination - Kingsley Ijomah
 // https://github.com/expressjs/method-override
 // https://stackabuse.com/building-a-rest-api-with-node-and-express/  with AjaX
+
+//endpoint handler - delete author by id
 router.delete("/:id", async(req, res) => {
   try {
     author = await Author.findById(req.params.id);

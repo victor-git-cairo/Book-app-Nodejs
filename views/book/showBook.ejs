@@ -1,0 +1,49 @@
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head.ejs'); %>
+  </head>
+  <body class="container">
+    <header>
+      <%- include('../partials/header.ejs'); %>
+    </header>
+
+    <main>
+      <div class="jumbotron">
+        <h2><%=book.title%></h2>
+
+        <%- include('../partials/errorMessage.ejs') %>
+
+        <img
+           src="<%=book.coverImagePath %>"
+           height="200"
+           width="100"
+           alt="bookImage"
+        />
+
+        <div>
+          <div>Author: <%=book.author.name %></div>
+          <div>Publish Date: <%= book.publishDate.toDateString() %></div>
+          <div>Page Count: <%= book.pageCount %></div>
+          <div>Description: <%= book.description %></div> 
+        </div>
+
+         <!-- here books refers to router prefix in apps file - I deleted later books/boodId/edit-->
+        <a href="<%= book.id %>/edit">Edit</a>
+
+        <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals -->
+        <%- include('../partials/deletebutton', { url: `/books/${book.id}` })
+        %>
+
+        <!-- here author refers to router prefix in apps file -->
+        <a href="/author/<%= book.author.id %>">View Author</a>
+
+      </div>
+    </main>
+    <footer>
+      <%- include('../partials/footer.ejs'); %>
+    </footer>
+  </body>
+</html>

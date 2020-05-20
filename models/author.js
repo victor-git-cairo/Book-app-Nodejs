@@ -11,6 +11,7 @@ var authorSchema = new mongoose.Schema({
   },
 });
 
+// check if theres still a book associated to the author, if so then throw an error?
 authorSchema.pre("remove", function(next) {
   Book.find({ author: this.id }, (err, books) => {
     if (err) {

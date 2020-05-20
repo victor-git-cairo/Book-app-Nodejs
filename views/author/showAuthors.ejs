@@ -21,16 +21,20 @@
         %>
 
         <div>
-   
-          
-      <% if (booksByAuthor.length > 0) { %>
-        <h2>Book By Author</h2>
-        <% booksByAuthor.forEach(book => { %>
-          <img src="<%=book.coverImagePath %>" height="200" width="100" alt="bookImage">
-        <% }) %>
-      <% } %>
-        </div>
+          <% if (booksByAuthor.length > 0) { %>
+          <h2>Book By Author</h2>
+          <% booksByAuthor.forEach(book => { %>
+          <a href="/books/<%=book.id%>">
+            <img
+            src="<%=book.coverImagePath %>"
+            height="200"
+            width="100"
+            alt="bookImage"
+          />
+          </a>
 
+          <% }) %> <% } %>
+        </div>
       </div>
     </main>
     <footer>

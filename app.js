@@ -9,6 +9,8 @@
 // mvc - models, views, controller(router) in expressjs
 // project setup - folder creation, endpoint setup, hookups template, import packages, etc
 
+
+//  research morgan and cors module
 // Load environment variable (env)
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -45,7 +47,7 @@ mongoose
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 //app.use(bodyParser.json())
-// override with POST having ?_method=DELETE
+// override POST method having ?_method=DELETE or ?_method=PUT
 app.use(methodOverride('_method')) // delete method override registration
 
  app.use('/', indexRouter)

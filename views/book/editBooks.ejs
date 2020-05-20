@@ -1,0 +1,68 @@
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head.ejs'); %>
+  </head>
+  <body class="container">
+    <header>
+      <%- include('../partials/header.ejs'); %>
+    </header>
+
+    <main>
+      <div class="jumbotron">
+        <h2>Edit Book</h2>
+        <%- include('../partials/errorMessage.ejs') %>
+        <form action="/books/<%= book.id %>?_method=PUT" method="POST">
+          <label for="name">Title</label>
+          <input type="text" class="form-control" name="title" />
+
+          <label for="name">Author</label>
+          <select name="author" class="form-control">
+            <% authors.forEach(author => { %> <% if (author.id == book.author) {
+            %>
+            <option
+              selected
+              label="<%= author.name %>"
+              value="<%= author.id %>"
+            ></option>
+            <% } else { %>
+            <option
+              label="<%= author.name %>"
+              value="<%= author.id %>"
+            ></option>
+            <% } %> 
+          <% }) %>
+          </select>
+
+          <label for="name">Publish Date</label>
+          <input type="date" name="publishDate" 
+                 value= "<%= book.publishDate == null ? '' : book.publishDate.toISOString().split('T')[0] %>" 
+                 class="form-control" />
+
+          <label for="name">Page Count</label>
+          <input type="number" 
+                name="pageCount" 
+                min="1"
+                value="<%= book.pageCount %>"
+                class="form-control"/>
+
+          <label for="name">Cover</label>
+          <input type="file" name="cover" class="form-control" />
+
+          <label for="name">Description</label>
+          <textarea name="description" class="form-control mb-4" id="" cols="30" rows="10"><%= book.description %></textarea>
+          
+          <input type="submit" value="Update" class="btn btn-primary mt-3" />
+          <a href="/">Cancel</a>
+        </form>
+        <% authors.forEach(author => { %> <%= author.name %> <% }) %>
+      </div>
+    </main>
+
+    <footer>
+      <%- include('../partials/footer.ejs'); %>
+    </footer>
+  </body>
+</html>

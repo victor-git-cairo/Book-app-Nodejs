@@ -44,8 +44,8 @@ var bookSchema = new mongoose.Schema({
 // virual property on model Mongo table 
 bookSchema.virtual('coverImagePath').get(function() {
   if (this.coverageImage != null) {
-    const a = path.join('/', 'upload/bookCovers', this.coverageImage)
-    console.log(a)
+    const imagePathLocation = path.join('/', 'upload/bookCovers', this.coverageImage)
+    //console.log(imagePathLocation)
     return path.join('/', 'upload/bookCovers', this.coverageImage)
   }
 })

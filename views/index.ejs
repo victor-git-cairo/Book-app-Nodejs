@@ -18,7 +18,10 @@
    
       <% if (books.length > 0) { %>
         <% books.forEach(book => { %>
-          <img src="<%=book.coverImagePath %>" height="200" width="100" alt="bookImage">
+          <a href="/books/<%=book.id%>">
+            <img src="<%=book.coverImagePath %>" height="200" width="100" alt="bookImage">
+          </a>
+
         <% }) %>
       <% } %>
 
