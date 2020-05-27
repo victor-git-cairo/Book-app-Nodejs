@@ -12,18 +12,24 @@
     </header>
 
     <main>
-      <div class="jumbotron">
+      <div class="container">
         <%- include('../partials/errorMessage.ejs') %>
-        <h3>New Authors</h3>
+        <h3 class="display-5">New Authors</h3>
 
         <!-- action - path  and post method to send data to server -->
         <!-- path - url to which the request will be sent - url(relative web page) or <end point> that will process the request -->
-        <form action="/author/addauthor" method="POST">
-          <label for="name">Name</label>
-          <input type="text" name="name" value="John Smith" /><br />
+        <form class="form-group" action="/author/addauthor" method="POST" >
+          <div class="col-sm-6">
+            <label for="name">Name</label>
+            <input class="form-control type="text" name="name" id="name" value="John Smith" /><br /> 
+          </div>
+
           <!-- body.name to get the value input in the form. You can use bodyparser -->
-          <a href="/author">Cancel</a>
-          <input type="submit" value="Create" />          
+          <div class="col-sm-6">
+            <a href="/author" role="button" class="btn btn-success">Cancel</a>
+            <input type="submit" role="button" class="btn btn-success" value="Create" />   
+          </div>
+       
         </form>
       </div>
     </main>

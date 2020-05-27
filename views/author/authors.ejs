@@ -11,25 +11,56 @@
     </header>
 
     <main>
-      <div class="jumbotron">
-        <h3>Search Authors</h3>
-        <form action="/authors" method="GET">
-          <label for="name">Author Name</label>
-          <input type="text" name="name">
-          <input type="submit" value=" Find " />  
-        </form>  
-        <% authors.forEach(author => { %>  
-        <div><%= author.name %></div>
-        <a href="/author/<%= author.id %>">View</a>
-        <a href="/author/<%= author.id %>/edit">Edit</a>
+      <div class="container">
+        <div>
+          <h3 class="display-5 text-center">Search Authors</h3>
+          <div>
+            <form action="/authors" method="GET" class="form-inline">
+              <div class="form-group">
+                <label class="mb-2 mr-sm-2" for="name">Author Name </label>
+                <input
+                  class="form-control mb-2 mr-sm-2"
+                  type="text"
+                  name="name"
+                  id="name"
+                />
+              </div>
 
-        <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals -->
+              <input
+                class="btn btn-success mb-2 mr-sm-2"
+                type="submit"
+                value=" Find "
+              />
+            </form>
+          </div>
+        </div>
 
-        <%- include('../partials/deletebutton', { url: `/author/${author.id}` }) %>
+        <% authors.forEach(author => { %>
+        <!-- <div><%= author.name %></div> -->
 
-  
-        <% }) %>
-      </div>
+
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Author Name </th>
+              <th scope="col">Action</th>          
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= author.name %></td>
+              <td>
+                <div class="d-flex"><a href="/author/<%= author.id %>" role="button" class="btn btn-info mr-1">View</a>
+                  <a href="/author/<%= author.id %>/edit" role="button" class="btn btn-warning mr-1">Edit</a>
+                  <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals -->
+                  <%- include('../partials/deletebutton', { url: `/author/${author.id}` }) %>
+                </div>
+              </td>             
+            </tr>        
+          </tbody>
+        </table>
+          <% }) %>        
+        </div>
     </main>
     <footer>
       <%- include('../partials/footer.ejs'); %>

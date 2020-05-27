@@ -11,14 +11,16 @@
     </header>
 
     <main>
-      <div class="jumbotron">
+      <div class="container">
         <h2><%=author.name%></h2>
 
-        <a href="/author/<%= author.id %>/edit">Edit</a>
+        <div class="d-flex justify-content-start">
+          <a href="/author/<%= author.id %>/edit" role="button" class="btn btn-success ">  Edit  </a>
+          <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals -->
+          <%- include('../partials/deletebutton', { url: `/author/${author.id}` })
+          %>
+        </div>
 
-        <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals -->
-        <%- include('../partials/deletebutton', { url: `/author/${author.id}` })
-        %>
 
         <div>
           <% if (booksByAuthor.length > 0) { %>

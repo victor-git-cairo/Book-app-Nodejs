@@ -11,15 +11,15 @@
     </header>
 
     <main>
-      <div class="jumbotron">
+      <div class="container">
         <h2>Recently Added</h2>
-        <p>Welcome to templating using EJS</p>
+        <p>NewZone - My Expressjs and EJS Demo Project</p>
       </div>
    
       <% if (books.length > 0) { %>
         <% books.forEach(book => { %>
           <a href="/books/<%=book.id%>">
-            <img src="<%=book.coverImagePath %>" height="200" width="100" alt="bookImage">
+            <img src="<%=book.coverImagePath %>" class="img-fluid img-thumbnail" height="400" width="200" alt="bookImage">
           </a>
 
         <% }) %>
