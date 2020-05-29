@@ -75,9 +75,9 @@ router.post("/add-book", upload.single("cover"), async (req, res) => {
     const newBook = await book.save();
     res.redirect("/books/allbooks");
   } catch (err) {
-    removeBook(book.coverageImage);
-    renderNewPage(res, book, true);
-  }
+    removeBook(book.coverageImage);  // removed book cover if the book cover not null, avoid duplicates?                                        
+    renderNewPage(res, book, true);  // show error message in currentpage 
+  } 
 });
 
 // endpoint handler - Show Book By ID
@@ -158,11 +158,12 @@ router.delete("/:id", async (req, res) => {
 
 
 // helper methods
+
+//https://stackoverflow.com/questions/41411604/how-to-delete-local-file-with-fs-unlink
 function removeBook(fileName) {
-  fs.unlink(path.join(uploadPath, fileName), (err) => {
-    if (err) console.log(err.message);
-    console.log(" an error has occurred");
-  });
+  fs.unlink(uploadPath +'\\'+ fileName, (err) => {
+    if (err) console.log(" an error has occurred");
+  })
 }
 
 async function renderEditPage(res, book, hasError = false) {
@@ -183,16 +184,19 @@ async function renderFormPage(res, book, form, hasError = false) {
       authors: authors,
       book: book,
     };
+
     if (hasError) {
-      if (form === edit) {
+      if (form === "edit") {
         params.errorMessage = "Error Updating Books";
       } else {
-        params.errorMessage = "Error CreatingUpdating Books";
+        params.errorMessage = "Error Occured While Adding New Book";   
       }
     }
 
     res.render(`../views/book/${form}`, params);
-  } catch {
+  } catch(err) {
+
+    console.log(err)
     res.redirect("/books");
   }
 }

@@ -121,7 +121,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async(req, res) => {
   try {
     author = await Author.findById(req.params.id);
-    await author.remove();
+    await author.remove();  // due to the pre method, an error is throw if there is a author has a book
     res.redirect("/")
   } catch (err) {
     console.log(err.message)

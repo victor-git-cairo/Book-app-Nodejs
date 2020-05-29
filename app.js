@@ -19,8 +19,8 @@ if (process.env.NODE_ENV !== 'production') {
 // Express Server - server setup
 const express = require('express')
 var path = require('path')
-var bodyParser = require('body-parser') // reads variable from page body
-var methodOverride = require('method-override')
+var bodyParser = require('body-parser') // reads variable from body page
+var methodOverride = require('method-override') // overrrides method delete, put. other
 const app = express()
 
 // routers - variable declaration
